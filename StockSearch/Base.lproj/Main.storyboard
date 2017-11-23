@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="17B48" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="17B48" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="rW4-qa-dUt">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -29,23 +29,32 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Stock Ticker Symbol" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gzt-tq-5HM">
-                                <rect key="frame" x="23" y="111" width="328" height="30"/>
+                                <rect key="frame" x="22" y="111" width="328" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="onInputChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="f33-QY-tvv"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47G-ER-dMl">
                                 <rect key="frame" x="76" y="159" width="87" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Get Quote"/>
+                                <connections>
+                                    <action selector="onSearchButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aUk-P6-7Zi"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lsq-0j-wlI">
                                 <rect key="frame" x="227" y="159" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                 <state key="normal" title="Clear"/>
+                                <connections>
+                                    <action selector="onClearButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JAW-XO-CT3"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Favorites" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CRc-0W-X1S">
                                 <rect key="frame" x="23" y="210" width="80" height="21"/>
@@ -64,6 +73,9 @@
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v9c-Td-R9m">
                                 <rect key="frame" x="250" y="205" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onAutoRefreshToggle:" destination="BYZ-38-t0r" eventType="valueChanged" id="Izg-lz-lqx"/>
+                                </connections>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uKk-bu-529">
                                 <rect key="frame" x="307" y="203" width="52" height="34"/>
@@ -71,6 +83,9 @@
                                 <state key="normal" image="RefreshIcon">
                                     <attributedString key="attributedTitle"/>
                                 </state>
+                                <connections>
+                                    <action selector="onRefreshButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EYQ-yo-Vbv"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sort by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1fU-Yc-0gO">
                                 <rect key="frame" x="23" y="268" width="61" height="21"/>
@@ -84,14 +99,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="OrderSelector" translatesAutoresizingMaskIntoConstraints="NO" id="hFc-UL-IZm">
-                                <rect key="frame" x="250" y="265" width="101" height="27"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            </pickerView>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="SortSelector" translatesAutoresizingMaskIntoConstraints="NO" id="XHb-eR-stg">
-                                <rect key="frame" x="82" y="262" width="101" height="27"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Order" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rvx-Ad-Hcz">
                                 <rect key="frame" x="195" y="268" width="48" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -99,6 +106,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DTf-R3-NaB">
+                                <rect key="frame" x="250" y="253" width="101" height="45"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cUx-GE-Jkm">
+                                <rect key="frame" x="87" y="253" width="100" height="45"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="0.13334134410078302" green="1" blue="0.53244833433947236" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -106,15 +121,60 @@
                         <outlet property="AutoRefreshButton" destination="v9c-Td-R9m" id="Shh-4w-UAU"/>
                         <outlet property="ClearButton" destination="lsq-0j-wlI" id="8iD-gA-wHj"/>
                         <outlet property="FavoriteList" destination="Owo-lv-wkw" id="dcF-wN-CFE"/>
-                        <outlet property="OrderSelector" destination="hFc-UL-IZm" id="FMU-JH-0fP"/>
+                        <outlet property="OrderPicker" destination="DTf-R3-NaB" id="vcD-fL-Zlb"/>
                         <outlet property="SearchButton" destination="47G-ER-dMl" id="t0f-t8-e2S"/>
-                        <outlet property="SortSelector" destination="XHb-eR-stg" id="qen-CX-iqW"/>
+                        <outlet property="SortPicker" destination="cUx-GE-Jkm" id="keC-AE-YpT"/>
                         <outlet property="TickerInput" destination="Gzt-tq-5HM" id="MxB-QC-Tlu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="117.59999999999999" y="123.68815592203899"/>
+            <point key="canvasLocation" x="-290" y="760"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="9Dx-lM-AX4">
+            <objects>
+                <tableViewController id="2On-sv-601" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="wSq-dR-vQV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="srL-dv-bGX">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="srL-dv-bGX" id="8ma-ma-SwQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2On-sv-601" id="kwF-Ap-WLy"/>
+                            <outlet property="delegate" destination="2On-sv-601" id="KPa-su-PRb"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="fqi-U8-6ba"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c1x-q8-TaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="663" y="56"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rS4-R1-Cfm">
+            <objects>
+                <navigationController id="rW4-qa-dUt" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="sh1-Np-iWw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2On-sv-601" kind="relationship" relationship="rootViewController" id="kat-gD-7kb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="02l-Li-cUf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-289" y="56"/>
         </scene>
     </scenes>
     <resources>
