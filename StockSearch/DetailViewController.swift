@@ -9,6 +9,13 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    @IBOutlet weak var currentTableView: UITableView!
+    @IBOutlet weak var indicatorPicker: UIPickerView!
+    @IBOutlet weak var changeIndicatorButton: UIButton!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

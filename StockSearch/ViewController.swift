@@ -73,6 +73,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBAction func onSearchButtonClick(_ sender: Any) {
         // TODO(fetch data and switch view)
+        
+        // switch view
+        let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     
@@ -106,9 +110,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.OrderPicker.dataSource = self
         self.OrderPicker.delegate = self
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
         // Hide navigation bar
         self.navigationController?.isNavigationBarHidden = true
-        
     }
 
     override func didReceiveMemoryWarning() {
