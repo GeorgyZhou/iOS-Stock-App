@@ -106,11 +106,19 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.OrderPicker.dataSource = self
         self.OrderPicker.delegate = self
         
+        // Hide navigation bar
+        self.navigationController?.isNavigationBarHidden = true
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
 }
 

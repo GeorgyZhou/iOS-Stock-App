@@ -15,6 +15,7 @@
 		12515F661FC61E5F00967597 /* StockSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F651FC61E5F00967597 /* StockSearchTests.swift */; };
 		12515F711FC61E5F00967597 /* StockSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F701FC61E5F00967597 /* StockSearchUITests.swift */; };
 		12515F811FC66E6600967597 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F801FC66E6600967597 /* RootViewController.swift */; };
+		12515F831FC672EE00967597 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F821FC672EE00967597 /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		12515F701FC61E5F00967597 /* StockSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearchUITests.swift; sourceTree = "<group>"; };
 		12515F721FC61E5F00967597 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12515F801FC66E6600967597 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		12515F821FC672EE00967597 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				12515F591FC61E5F00967597 /* LaunchScreen.storyboard */,
 				12515F5C1FC61E5F00967597 /* Info.plist */,
 				12515F801FC66E6600967597 /* RootViewController.swift */,
+				12515F821FC672EE00967597 /* DetailViewController.swift */,
 			);
 			path = StockSearch;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				12515F531FC61E5F00967597 /* ViewController.swift in Sources */,
 				12515F511FC61E5F00967597 /* AppDelegate.swift in Sources */,
 				12515F811FC66E6600967597 /* RootViewController.swift in Sources */,
+				12515F831FC672EE00967597 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
