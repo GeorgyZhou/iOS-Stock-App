@@ -22,9 +22,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var SortPicker: UIPickerView!
     
     
-    let sortIndicators = ["Default", "Symbol", "Price", "Change", "Change(%)"];
-    let orderIndicators = ["Ascending", "Descending"];
-    var searchTextField : SearchTextField = SearchTextField(frame: CGRect(x: 22, y: 146, width: 328, height: 30));
+    let sortIndicators = ["Default", "Symbol", "Price", "Change", "Change(%)"]
+    let orderIndicators = ["Ascending", "Descending"]
+    var searchTextField : SearchTextField = SearchTextField(frame: CGRect(x: 22, y: 146, width: 328, height: 30))
+    var ticker : String = ""
     
     
     /** -------------------------- PickerView Initialize -------------------------- **/
@@ -80,8 +81,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         if validate() {
             let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
-            detailViewController.ticker = TickerInput.text!.trimmingCharacters(
-                in: NSCharacterSet.whitespacesAndNewlines)
+            detailViewController.ticker = self.ticker
             self.navigationController?.pushViewController(detailViewController, animated: true)
         } else {
             
@@ -103,6 +103,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     @IBAction func onInputChange(_ sender: Any) {
+        if !validate() { return }
         loadSuggestions()
     }
     
@@ -117,11 +118,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         if validTicker == nil || validTicker?.characters.count == 0 {
             return false
         }
+        ticker = validTicker!
         return true
     }
     
     func loadSuggestions() -> Void {
-        
+        let acUrl = "http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input=" + ticker;
+        Alamofire.request(acUrl).responseJSON { response in
+            if let json = response.result.value {
+                print(json[0]["Exchange"])
+            }
+        }
     }
     
     
