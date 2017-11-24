@@ -771,7 +771,7 @@ fileprivate extension UIView {
     
     fileprivate var csSafeAreaInsets: UIEdgeInsets {
         if #available(iOS 11.0, *) {
-            return self.safeAreaInsets
+            return self.csSafeAreaInsets
         } else {
             return .zero
         }
