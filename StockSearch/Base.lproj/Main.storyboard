@@ -28,17 +28,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Stock Ticker Symbol" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gzt-tq-5HM">
-                                <rect key="frame" x="22" y="111" width="328" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="onInputChange:" destination="BYZ-38-t0r" eventType="editingChanged" id="iDh-7v-LWb"/>
-                                    <action selector="onInputEnd:" destination="BYZ-38-t0r" eventType="editingDidEnd" id="ftA-Q7-dH6"/>
-                                </connections>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47G-ER-dMl">
                                 <rect key="frame" x="76" y="159" width="87" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -126,7 +115,6 @@
                         <outlet property="OrderPicker" destination="DTf-R3-NaB" id="vcD-fL-Zlb"/>
                         <outlet property="SearchButton" destination="47G-ER-dMl" id="t0f-t8-e2S"/>
                         <outlet property="SortPicker" destination="cUx-GE-Jkm" id="keC-AE-YpT"/>
-                        <outlet property="TickerInput" destination="Gzt-tq-5HM" id="MxB-QC-Tlu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

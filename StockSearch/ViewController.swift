@@ -15,16 +15,15 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBOutlet weak var SearchButton: UIButton!
     @IBOutlet weak var ClearButton: UIButton!
-    @IBOutlet weak var TickerInput: UITextField!
     @IBOutlet weak var AutoRefreshButton: UISwitch!
     @IBOutlet weak var FavoriteList: UITableView!
     @IBOutlet weak var OrderPicker: UIPickerView!
     @IBOutlet weak var SortPicker: UIPickerView!
     
+    var searchTextField : SearchTextField = SearchTextField(frame: CGRect(x: 22, y: 111, width: 328, height: 30))
     
     let sortIndicators = ["Default", "Symbol", "Price", "Change", "Change(%)"]
     let orderIndicators = ["Ascending", "Descending"]
-    var searchTextField : SearchTextField = SearchTextField(frame: CGRect(x: 22, y: 146, width: 328, height: 30))
     var ticker : String = ""
     
     
@@ -84,7 +83,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             detailViewController.ticker = self.ticker
             self.navigationController?.pushViewController(detailViewController, animated: true)
         } else {
-            
+            let alertController = UIAlertController(title: "Please enter a stock name or symbol",
+                                                    message: nil, preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                self.presentedViewController?.dismiss(animated: false, completion: nil)
+            }
         }
     }
     
@@ -102,18 +106,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // TODO(change auto refresh policy)
     }
     
-    @IBAction func onInputChange(_ sender: Any) {
-        if !validate() { return }
-        loadSuggestions()
-    }
-    
-    @IBAction func onInputEnd(_ sender: Any) {
-        searchTextField.isHidden = true
-    }
-    
     /** --------------------------       Utility Function      -------------------------- **/
     func validate() -> Bool {
-        let inputTicker = TickerInput.text
+        let inputTicker = searchTextField.text
         let validTicker = inputTicker?.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
         if validTicker == nil || validTicker?.characters.count == 0 {
             return false
@@ -125,18 +120,32 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func loadSuggestions() -> Void {
         let acUrl = "http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input=" + ticker;
         Alamofire.request(acUrl).responseJSON { response in
-            if let json = response.result.value {
-                print(json[0]["Exchange"])
+            switch response.result {
+            case.success(let json):
+                let data = self.parseJSON(json: json)
+                self.searchTextField.filterStrings(data)
+                self.searchTextField.stopLoadingIndicator()
+            case.failure(let error):
+                print(error)
             }
         }
     }
     
+    func parseJSON(json: Any) -> [String] {
+        let sugs = json as! Array<Any>
+        var sugArray : Array<String> = []
+        for obj in sugs {
+            let dic = obj as! Dictionary<String, String>
+            let symbol = dic["Symbol"]! as String
+            let Name = dic["Name"]! as String
+            let Exchange = dic["Exchange"]! as String
+            let sug = symbol + " - " + Name + " (" + Exchange + ")"
+            sugArray.append(sug)
+        }
+        return sugArray
+    }
     
-    /** --------------------------       View Initialize       -------------------------- **/
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func initView() -> Void {
         // Initialize PickerView data and delegate
         self.SortPicker.dataSource = self
         self.SortPicker.delegate = self
@@ -144,12 +153,31 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.OrderPicker.delegate = self
         
         // Initialize auto complete text view
-        searchTextField = SearchTextField(frame: CGRect(x: 22, y: 145, width: 328, height: 160))
-        searchTextField.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        searchTextField.isHidden = true
-        self.view.addSubview(searchTextField)
-        
-        
+        self.searchTextField.backgroundColor = UIColor.white
+        self.searchTextField.placeholder = "Enter Stock Ticker Symbol"
+        self.searchTextField.textAlignment = .center
+        self.searchTextField.maxNumberOfResults = 5
+        self.searchTextField.userStoppedTypingHandler = {
+            if let criteria = self.searchTextField.text {
+                if criteria.characters.count > 1 && self.validate() {
+                    self.searchTextField.showLoadingIndicator()
+                    self.loadSuggestions()
+                }
+            }
+        }
+        self.searchTextField.itemSelectionHandler = { filteredResults, itemPosition in
+            let item = filteredResults[itemPosition]
+            self.searchTextField.text = item.title.components(separatedBy: " ")[0]
+        }
+        self.view.addSubview(self.searchTextField)
+    }
+    
+    
+    /** --------------------------       View Initialize       -------------------------- **/
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.initView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
