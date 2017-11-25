@@ -36,7 +36,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int,
                     forComponent component: Int) -> String? {
-        // TODO (resort data)
         return fetchTextForRow(pickerView: pickerView, rowIndex: row)
     }
     
@@ -90,7 +89,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     
     @IBAction func onClearButtonClick(_ sender: Any) {
-        // TODO(clear the input ticker and cache data)
+        self.ticker = ""
+        self.searchTextField.text = ""
+        self.searchTextField.filterStrings([])
     }
     
     
@@ -103,6 +104,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     /** --------------------------       Utility Function      -------------------------- **/
+    
     func validate() -> Bool {
         let inputTicker = searchTextField.text
         let validTicker = inputTicker?.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)

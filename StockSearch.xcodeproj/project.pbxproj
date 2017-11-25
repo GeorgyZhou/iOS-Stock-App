@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		121C53D11FC9137200D0C447 /* CurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121C53D01FC9137200D0C447 /* CurrentViewController.swift */; };
 		12515F511FC61E5F00967597 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F501FC61E5F00967597 /* AppDelegate.swift */; };
 		12515F531FC61E5F00967597 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F521FC61E5F00967597 /* ViewController.swift */; };
 		12515F561FC61E5F00967597 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12515F541FC61E5F00967597 /* Main.storyboard */; };
@@ -14,7 +15,6 @@
 		12515F5B1FC61E5F00967597 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12515F591FC61E5F00967597 /* LaunchScreen.storyboard */; };
 		12515F661FC61E5F00967597 /* StockSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F651FC61E5F00967597 /* StockSearchTests.swift */; };
 		12515F711FC61E5F00967597 /* StockSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F701FC61E5F00967597 /* StockSearchUITests.swift */; };
-		12515F811FC66E6600967597 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F801FC66E6600967597 /* RootViewController.swift */; };
 		12515F831FC672EE00967597 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F821FC672EE00967597 /* DetailViewController.swift */; };
 		19D0584DC63594CB7B5F3D55 /* Pods_StockSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2372A2010B7B541C63DF731C /* Pods_StockSearchUITests.framework */; };
 		29CF4743399A0FEF5DE7FDA7 /* Pods_StockSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72208C9703565C9A82EB44E /* Pods_StockSearch.framework */; };
@@ -40,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		11C93D9A3FFBE87F30E3D9BB /* Pods-StockSearchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockSearchUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StockSearchUITests/Pods-StockSearchUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		121C53D01FC9137200D0C447 /* CurrentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentViewController.swift; sourceTree = "<group>"; };
 		12515F4D1FC61E5F00967597 /* StockSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12515F501FC61E5F00967597 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12515F521FC61E5F00967597 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		12515F6C1FC61E5F00967597 /* StockSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StockSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		12515F701FC61E5F00967597 /* StockSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearchUITests.swift; sourceTree = "<group>"; };
 		12515F721FC61E5F00967597 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		12515F801FC66E6600967597 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		12515F821FC672EE00967597 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2372A2010B7B541C63DF731C /* Pods_StockSearchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockSearchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F18C90BF4DA6F9E56C15B90 /* Pods-StockSearchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockSearchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StockSearchTests/Pods-StockSearchTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -124,8 +124,8 @@
 				12515F571FC61E5F00967597 /* Assets.xcassets */,
 				12515F591FC61E5F00967597 /* LaunchScreen.storyboard */,
 				12515F5C1FC61E5F00967597 /* Info.plist */,
-				12515F801FC66E6600967597 /* RootViewController.swift */,
 				12515F821FC672EE00967597 /* DetailViewController.swift */,
+				121C53D01FC9137200D0C447 /* CurrentViewController.swift */,
 			);
 			path = StockSearch;
 			sourceTree = "<group>";
@@ -470,9 +470,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				121C53D11FC9137200D0C447 /* CurrentViewController.swift in Sources */,
 				12515F531FC61E5F00967597 /* ViewController.swift in Sources */,
 				12515F511FC61E5F00967597 /* AppDelegate.swift in Sources */,
-				12515F811FC66E6600967597 /* RootViewController.swift in Sources */,
 				12515F831FC672EE00967597 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

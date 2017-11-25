@@ -9,23 +9,44 @@
 import UIKit
 import Highcharts
 
-class DetailViewController: UIViewController{
+class DetailViewController: UIViewController {
     
     
-    
-    @IBOutlet weak var currentTableView: UITableView!
-    @IBOutlet weak var indicatorPicker: UIPickerView!
-    @IBOutlet weak var changeIndicatorButton: UIButton!
+    @IBOutlet weak var newsView: UIView!
+    @IBOutlet weak var historyView: UIView!
+    @IBOutlet weak var currentView: UIView!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     var ticker: String = ""
     
+    /** --------------------------       Utility Function      -------------------------- **/
+    
+    func switchCurrentView() -> Void {
+        self.newsView.isHidden = true
+        self.historyView.isHidden = true
+        self.currentView.isHidden = false
+    }
+    
+    func switchHistoryView() -> Void {
+        self.newsView.isHidden = true
+        self.currentView.isHidden = true
+        self.historyView.isHidden = false
+    }
+    
+    func switchNewsView() -> Void {
+        self.currentView.isHidden = true
+        self.historyView.isHidden = true
+        self.newsView.isHidden = false
+    }
+    
+    /** --------------------------       View Initialize       -------------------------- **/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
-        // Load table
-        // self.currentTableView.delegate = self
-        // self.currentTableView.dataSource = self
+        self.switchCurrentView()
+        self.switchHistoryView()
+        self.switchNewsView()
+        self.view.addSubview(self.currentView)
     }
     
     override func didReceiveMemoryWarning() {
