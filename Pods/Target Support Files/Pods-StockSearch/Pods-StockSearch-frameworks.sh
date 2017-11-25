@@ -107,6 +107,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/EasyToast/EasyToast.framework"
   install_framework "${PODS_ROOT}/Highcharts/development/Highcharts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftSpinner/SwiftSpinner.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -115,6 +116,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/EasyToast/EasyToast.framework"
   install_framework "${PODS_ROOT}/Highcharts/development/Highcharts.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftSpinner/SwiftSpinner.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

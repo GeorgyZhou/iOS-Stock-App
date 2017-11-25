@@ -9,7 +9,7 @@
 import UIKit
 import SearchTextField
 import Alamofire
-import Toast_Swift
+import EasyToast
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -83,7 +83,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             detailViewController.ticker = self.ticker
             self.navigationController?.pushViewController(detailViewController, animated: true)
         } else {
-            self.view.makeToast("Please enter a stock name or symbol")
+            self.view.showToast("Please enter a stock name or symbol", position: ToastPosition.bottom, popTime: 5, dismissOnTap: false)
         }
     }
     

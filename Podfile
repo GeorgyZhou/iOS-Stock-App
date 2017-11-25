@@ -11,6 +11,7 @@ target 'StockSearch' do
   pod 'Alamofire', '~> 4.5'
   pod 'EasyToast'
   pod 'AlamofireSwiftyJSON'
+  pod 'SwiftSpinner'
   
   target 'StockSearchTests' do
     inherit! :search_paths

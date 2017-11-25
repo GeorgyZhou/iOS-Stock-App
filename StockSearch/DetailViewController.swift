@@ -54,7 +54,8 @@ class DetailViewController: UIViewController {
         Alamofire.request(quoteUrl).responseJSON { response in
             switch response.result {
             case.success(let json):
-                currentController.quoteData = json
+                print(json)
+                //currentController.quoteData = json
             case.failure(let error):
                 print(error)
             }
@@ -64,11 +65,12 @@ class DetailViewController: UIViewController {
     func loadNews() -> Void {
         if ticker.characters.count < 0 { return }
         let newsUrl = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/news?symbol=" + ticker
-        let newsController = self.childViewControllers[1] as! NewsViewController
+        // let newsController = self.childViewControllers[1] as! NewsViewController
         Alamofire.request(newsUrl).responseJSON { response in
             switch response.result {
             case.success(let json):
-                newsController.newsData = json
+                print(json)
+                // newsController.newsData = json
             case.failure(let error):
                 print(error)
             }
