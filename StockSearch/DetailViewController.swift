@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Highcharts
+import Alamofire
 
 class DetailViewController: UIViewController {
     
@@ -15,6 +15,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var newsView: UIView!
     @IBOutlet weak var historyView: UIView!
     @IBOutlet weak var currentView: UIView!
+    
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     var ticker: String = ""
@@ -39,13 +40,17 @@ class DetailViewController: UIViewController {
         self.newsView.isHidden = false
     }
     
+    func loadData() -> Void {
+        let currentControllers = self.childViewControllers[0]
+        let historicalControllers = self.childViewControllers[1]
+        let 
+    }
+    
     /** --------------------------       View Initialize       -------------------------- **/
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.switchCurrentView()
-        self.switchHistoryView()
-        self.switchNewsView()
         self.view.addSubview(self.currentView)
     }
     

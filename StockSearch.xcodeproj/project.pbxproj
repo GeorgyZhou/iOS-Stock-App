@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		121C53D11FC9137200D0C447 /* CurrentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121C53D01FC9137200D0C447 /* CurrentViewController.swift */; };
+		121C53D31FC91FB600D0C447 /* QuoteTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121C53D21FC91FB600D0C447 /* QuoteTableCell.swift */; };
 		12515F511FC61E5F00967597 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F501FC61E5F00967597 /* AppDelegate.swift */; };
 		12515F531FC61E5F00967597 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F521FC61E5F00967597 /* ViewController.swift */; };
 		12515F561FC61E5F00967597 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 12515F541FC61E5F00967597 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		11C93D9A3FFBE87F30E3D9BB /* Pods-StockSearchUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockSearchUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StockSearchUITests/Pods-StockSearchUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		121C53D01FC9137200D0C447 /* CurrentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentViewController.swift; sourceTree = "<group>"; };
+		121C53D21FC91FB600D0C447 /* QuoteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteTableCell.swift; sourceTree = "<group>"; };
 		12515F4D1FC61E5F00967597 /* StockSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12515F501FC61E5F00967597 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12515F521FC61E5F00967597 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 				12515F5C1FC61E5F00967597 /* Info.plist */,
 				12515F821FC672EE00967597 /* DetailViewController.swift */,
 				121C53D01FC9137200D0C447 /* CurrentViewController.swift */,
+				121C53D21FC91FB600D0C447 /* QuoteTableCell.swift */,
 			);
 			path = StockSearch;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				12515F531FC61E5F00967597 /* ViewController.swift in Sources */,
 				12515F511FC61E5F00967597 /* AppDelegate.swift in Sources */,
 				12515F831FC672EE00967597 /* DetailViewController.swift in Sources */,
+				121C53D31FC91FB600D0C447 /* QuoteTableCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

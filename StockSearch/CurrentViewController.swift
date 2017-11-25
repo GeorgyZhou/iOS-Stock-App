@@ -22,7 +22,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     
     let indicatorPickerData = ["Price", "SMA", "EMA", "STOCH", "RSI", "ADX", "CCI", "BBANDS", "MACD"]
     let tableHeaders = ["Stock Symbol", "Last Price", "Change", "Timestamp", "Open", "Close", "Day's Range", "Volume"]
-    let tableInfos: [String] = []
+    var tableInfos = ["", "", "", "", "", "", "", ""]
     
     /** --------------------------  TableView Implementation   -------------------------- **/
     
@@ -35,8 +35,9 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = quoteTableView.dequeueReusableCell(withIdentifier: "QuoteTableViewCell", for: indexPath)
-        cell.textLabel?.text = tableHeaders[indexPath.row]
+        let cell = quoteTableView.dequeueReusableCell(withIdentifier: "QuoteTableViewCell", for: indexPath) as! QuoteTableCell
+        cell.headerLabel?.text = tableHeaders[indexPath.row]
+        cell.contentLabel?.text = tableInfos[indexPath.row]
         return cell
     }
     
@@ -69,8 +70,21 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         return self.indicatorPickerData[row]
     }
     
+    /** --------------------------       Utility Function      -------------------------- **/
+    
+    func initView() -> Void {
+        self.quoteTableView.delegate = self
+        self.quoteTableView.dataSource = self
+        
+        self.indicatorPicker.delegate = self
+        self.indicatorPicker.dataSource = self
+    }
+    
+    /** --------------------------       View Initialize       -------------------------- **/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.initView()
     }
     
     override func didReceiveMemoryWarning() {
