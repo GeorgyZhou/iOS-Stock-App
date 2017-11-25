@@ -359,10 +359,10 @@
             </objects>
             <point key="canvasLocation" x="2993.5999999999999" y="-1165.8170914542729"/>
         </scene>
-        <!--View Controller-->
+        <!--History View Controller-->
         <scene sceneID="5nZ-l0-aJD">
             <objects>
-                <viewController id="ofa-T9-3PC" sceneMemberID="viewController">
+                <viewController id="ofa-T9-3PC" customClass="HistoryViewController" customModule="StockSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ffJ-iu-ThI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -373,10 +373,10 @@
             </objects>
             <point key="canvasLocation" x="2988" y="-589"/>
         </scene>
-        <!--View Controller-->
+        <!--News View Controller-->
         <scene sceneID="iUf-im-gfx">
             <objects>
-                <viewController id="hdk-p7-dfO" sceneMemberID="viewController">
+                <viewController id="hdk-p7-dfO" customClass="NewsViewController" customModule="StockSearch" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gVc-Uf-Jjk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

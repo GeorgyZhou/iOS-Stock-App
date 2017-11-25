@@ -19,7 +19,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var quoteTableView: UITableView!
     
     
-    
+    var quoteData: Any = nil;
     let indicatorPickerData = ["Price", "SMA", "EMA", "STOCH", "RSI", "ADX", "CCI", "BBANDS", "MACD"]
     let tableHeaders = ["Stock Symbol", "Last Price", "Change", "Timestamp", "Open", "Close", "Day's Range", "Volume"]
     var tableInfos = ["", "", "", "", "", "", "", ""]

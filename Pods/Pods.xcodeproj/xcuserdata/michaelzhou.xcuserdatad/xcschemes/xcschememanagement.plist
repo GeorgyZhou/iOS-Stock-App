@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>AlamofireSwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>EasyToast.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-StockSearch.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -29,7 +39,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Toast-Swift.xcscheme</key>
+		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -37,12 +47,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3A69452084BFEB022AC85B9A67F333B5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>491DC8018CFB2ADB767BD689F1DB33B0</key>
+		<key>61E5C1379DC63FAC57AF48F891CFB123</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,7 +57,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8C503EE889A2D0E17971C539B720E838</key>
+		<key>B3AAF23FBD09B55FAF1E4F7D351E9F8A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C242BB404DD8065DB8D2DC88E5CDE7B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C68748E71A3DDB40B0AAF4BC0A8F9030</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C7A27CEE1A5A58B01166DDC8469E0871</key>
 		<dict>
 			<key>primary</key>
 			<true/>

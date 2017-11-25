@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C242BB404DD8065DB8D2DC88E5CDE7B8'
-               BlueprintName = 'SearchTextField'
+               BlueprintIdentifier = 'C68748E71A3DDB40B0AAF4BC0A8F9030'
+               BlueprintName = 'SwiftyJSON'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SearchTextField.framework'>
+               BuildableName = 'SwiftyJSON.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

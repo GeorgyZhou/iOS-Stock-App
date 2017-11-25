@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C242BB404DD8065DB8D2DC88E5CDE7B8'
-               BlueprintName = 'SearchTextField'
+               BlueprintIdentifier = 'C7A27CEE1A5A58B01166DDC8469E0871'
+               BlueprintName = 'EasyToast'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SearchTextField.framework'>
+               BuildableName = 'EasyToast.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

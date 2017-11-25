@@ -8,8 +8,9 @@ target 'StockSearch' do
   # Pods for StockSearch
   pod 'Highcharts', '~> 6.0.2'
   pod "SearchTextField", '~> 1.1.0'
-  pod 'Toast-Swift'
   pod 'Alamofire', '~> 4.5'
+  pod 'EasyToast'
+  pod 'AlamofireSwiftyJSON'
   
   target 'StockSearchTests' do
     inherit! :search_paths

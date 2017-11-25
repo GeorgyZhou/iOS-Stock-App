@@ -125,6 +125,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 self.searchTextField.stopLoadingIndicator()
             case.failure(let error):
                 print(error)
+                self.searchTextField.stopLoadingIndicator()
             }
         }
     }
