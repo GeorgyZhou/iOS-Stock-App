@@ -5,18 +5,11 @@
   <title>IndicatorsChart</title>
 </head>
 <body>
-  <h1>Hello World</h1>
   <div id="chartContainer"></div>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
 </body>
-<!-- <script src="highcharts.js"></script>
-<script src="exporting.js"></script> -->
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="highcharts.js"></script>
+<script src="exporting.js"></script>
 <script>
-
-  starter("AAPL", "Price");
   
   var sortCompareFn = function(obj1, obj2) {
       if (obj1[0] < obj2[0]) {
@@ -27,7 +20,7 @@
       return 0;
   }
 
-  function starter(inputTicker, inputIndicator) {
+  function loader(inputTicker, inputIndicator) {
     ticker = inputTicker;
     indicator = inputIndicator;
     loadIndicatorChart(ticker, indicator);

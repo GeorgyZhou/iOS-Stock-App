@@ -6,7 +6,7 @@ target 'StockSearch' do
   use_frameworks!
 
   # Pods for StockSearch
-  pod "SearchTextField", '~> 1.1.0'
+  pod "SearchTextField"
   pod 'Alamofire', '~> 4.5'
   pod 'EasyToast'
   pod 'AlamofireSwiftyJSON'

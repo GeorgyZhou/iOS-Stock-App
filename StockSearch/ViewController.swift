@@ -110,7 +110,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     func validate() -> Bool {
         let inputTicker = searchTextField.text
         let validTicker = inputTicker?.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-        if validTicker == nil || validTicker?.characters.count == 0 {
+        if validTicker == nil || validTicker?.count == 0 {
             return false
         }
         ticker = validTicker!
@@ -157,12 +157,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.searchTextField.maxNumberOfResults = 5
         self.searchTextField.userStoppedTypingHandler = {
             if let criteria = self.searchTextField.text {
-                if criteria.characters.count > 1 && self.validate() {
+                if criteria.count > 1, self.validate() {
                     self.searchTextField.showLoadingIndicator()
                     self.loadSuggestions()
                 }
             }
-        }
+        } as (() -> Void)
         self.searchTextField.itemSelectionHandler = { filteredResults, itemPosition in
             let item = filteredResults[itemPosition]
             self.searchTextField.text = item.title.components(separatedBy: " ")[0]

@@ -194,7 +194,7 @@ class ToastWindow: UIWindow {
     
     //MARK: Actions
     
-    func windowTapped() {
+    @objc func windowTapped() {
         self.isUserInteractionEnabled = false
         self.dismiss()
     }

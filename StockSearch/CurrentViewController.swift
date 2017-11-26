@@ -18,12 +18,15 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var changeButton: UIButton!
     @IBOutlet weak var quoteTableView: UITableView!
     @IBOutlet weak var indicatorWebView: UIWebView!
+    @IBOutlet weak var subContentView: UIView!
     
     
     // var quoteData: Any = nil;
     let indicatorPickerData = ["Price", "SMA", "EMA", "STOCH", "RSI", "ADX", "CCI", "BBANDS", "MACD"]
     let tableHeaders = ["Stock Symbol", "Last Price", "Change", "Timestamp", "Open", "Close", "Day's Range", "Volume"]
     var tableInfos = ["", "", "", "", "", "", "", ""]
+    var ticker = ""
+    var indicator = "Price"
     
     /** --------------------------  TableView Implementation   -------------------------- **/
     
@@ -39,8 +42,8 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         let cell = quoteTableView.dequeueReusableCell(withIdentifier: "QuoteTableViewCell", for: indexPath) as! QuoteTableCell
         cell.headerLabel?.text = tableHeaders[indexPath.row]
         cell.contentLabel?.text = tableInfos[indexPath.row]
-        if indexPath.row == 2 && tableInfos[2].characters.count > 0 {
-            let headingChar = Array(tableInfos[2].characters)[0]
+        if indexPath.row == 2, tableInfos[2].count > 0 {
+            let headingChar = Array(tableInfos[2])[0]
             cell.infoImageView.image = (headingChar == "-" ? #imageLiteral(resourceName: "DownArrowIcon") : #imageLiteral(resourceName: "UpArrowIcon"))
         }
         return cell
@@ -49,7 +52,11 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     /** --------------------------   WebView Implementation    -------------------------- **/
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        
+        var newBounds = self.indicatorWebView.bounds
+        print("Before resizing: \(newBounds.size.height)")
+        // newBounds.size.height = self.indicatorWebView.scrollView.contentSize.height
+        self.indicatorWebView.bounds = newBounds
+        print("Finish resizing: \(newBounds.size.height)")
     }
     
     /** --------------------------       Indicator Picker      -------------------------- **/
@@ -91,6 +98,24 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         
     }
     
+    func loadWebView(indicator: String) {
+        guard let path = Bundle.main.path(forResource: "webview/indicators", ofType: "html") else {
+            print("indicators.html loading failed")
+            return
+        }
+        let html = try! String(contentsOfFile: path)
+        self.indicatorWebView.loadHTMLString(html, baseURL: nil)
+        self.loadWebViewChart(indicator: indicator)
+        self.indicator = indicator
+    }
+    
+    func loadWebViewChart(indicator: String) {
+        self.indicatorWebView.stringByEvaluatingJavaScript(from: "loader(\(self.ticker, indicator)")
+    }
+    
+    func resizeScrollView(height: CGFloat) {
+        self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: height)
+    }
     
     func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
         tableInfos[0] = data["quote"]["ticker"].string!
@@ -118,17 +143,14 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: 750.0)
         
-        guard let url = Bundle.main.url(forResource: "webview/indicators", withExtension: "html") else {
-            print("indicators.html loading failed")
-            return
-        }
-        let request = URLRequest(url: url)
-        self.indicatorWebView.loadRequest(request)
+        self.resizeScrollView(height: 750.0)
+        
         self.indicatorWebView.isOpaque = false
         self.indicatorWebView.backgroundColor = UIColor.clear
+        print("when initializing: \(self.indicatorWebView.bounds.size.height)")
         self.indicatorWebView.delegate = self
+        self.loadWebView(indicator: "Price")
         
         self.quoteTableView.delegate = self
         self.quoteTableView.dataSource = self

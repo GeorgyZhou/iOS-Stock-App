@@ -26,6 +26,8 @@ class DetailViewController: UIViewController {
         switch self.segmentControl.selectedSegmentIndex
         {
         case 0:
+            let currentController = self.childViewControllers[0] as! CurrentViewController
+            currentController.ticker = self.ticker
             switchCurrentView()
         case 1:
             switchHistoryView()
@@ -64,7 +66,7 @@ class DetailViewController: UIViewController {
     }
     
     func loadQuote() -> Void {
-        if ticker.characters.count < 0 { return }
+        if ticker.count < 0 { return }
         let quoteUrl = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/quote?symbol=" + ticker
         let currentController = self.childViewControllers[0] as! CurrentViewController
         Alamofire.request(quoteUrl).responseSwiftyJSON { response in
@@ -79,7 +81,7 @@ class DetailViewController: UIViewController {
     }
     
     func loadNews() -> Void {
-        if ticker.characters.count < 0 { return }
+        if ticker.count < 0 { return }
         let newsUrl = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/news?symbol=" + ticker
         let newsViewController = self.childViewControllers[2] as! NewsViewController
         Alamofire.request(newsUrl).responseSwiftyJSON { response in
