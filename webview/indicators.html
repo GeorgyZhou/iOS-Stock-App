@@ -6,27 +6,9 @@
 </head>
 <body>
   <h1>Hello World</h1>
+  <div id="chartContainer"></div>
   <h1>Hello World</h1>
   <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <h1>Hello World</h1>
-  <div id="chartContainer">
-  </div>
 </body>
 <script src="highcharts.js"></script>
 <script src="exporting.js"></script>
@@ -71,7 +53,6 @@
 
   function drawChart(data, indicator, ticker) {
     let options;
-    console.log(data['priceSeries'].sort(sortCompareFn))
     if (indicator === 'Price') {
       const titleText = ticker + ' Stock Price and Volume';
       options = {
@@ -101,8 +82,8 @@
           title: {
             text: "Stock Price"
           },
-          min: data['quote']['maxPrice'],
-          max: data['quote']['minPrice']
+          min: data['quote']['minPrice'],
+          max: data['quote']['maxPrice']
         }, {
           labels: {
             format: '{value}M'

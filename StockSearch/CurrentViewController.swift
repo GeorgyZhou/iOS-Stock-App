@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet var scrollView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var FBButton: UIButton!
     @IBOutlet weak var starButton: UIButton!
     @IBOutlet weak var indicatorPicker: UIPickerView!
@@ -84,16 +84,12 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     func initView() -> Void {
         self.quoteTableView.delegate = self
         self.quoteTableView.dataSource = self
+        self.quoteTableView.alwaysBounceVertical = false
         
         self.indicatorPicker.delegate = self
         self.indicatorPicker.dataSource = self
         
-        guard let url = Bundle.main.url(forResource: "webview/indicators", withExtension: "html") else {
-            print("indicators.html loading failed")
-            return
-        }
-        let request = URLRequest(url: url)
-        self.indicatorWebView.loadRequest(request)
+       
     }
     
     func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
@@ -118,6 +114,17 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: 750.0)
+        
+        guard let url = Bundle.main.url(forResource: "webview/indicators", withExtension: "html") else {
+            print("indicators.html loading failed")
+            return
+        }
+        let request = URLRequest(url: url)
+        self.indicatorWebView.loadRequest(request)
     }
     
     override func didReceiveMemoryWarning() {

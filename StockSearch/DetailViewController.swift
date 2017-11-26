@@ -95,6 +95,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = ticker
         self.switchCurrentView()
         self.loadData()
         self.view.addSubview(self.currentView)
