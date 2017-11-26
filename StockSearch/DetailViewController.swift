@@ -51,13 +51,11 @@ class DetailViewController: UIViewController {
         if ticker.characters.count < 0 { return }
         let quoteUrl = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/quote?symbol=" + ticker
         let currentController = self.childViewControllers[0] as! CurrentViewController
-        Alamofire.request(quoteUrl).responseJSON { response in
-            switch response.result {
-            case.success(let json):
-                print(json)
-                //currentController.quoteData = json
-            case.failure(let error):
-                print(error)
+        Alamofire.request(quoteUrl).responseSwiftyJSON { response in
+            if response.result.isSuccess, let json = response.result.value {
+                currentController.onTableDataLoaded(data: json)
+            } else if let error = response.error {
+                print (error)
             }
         }
     }
@@ -65,14 +63,12 @@ class DetailViewController: UIViewController {
     func loadNews() -> Void {
         if ticker.characters.count < 0 { return }
         let newsUrl = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/news?symbol=" + ticker
-        // let newsController = self.childViewControllers[1] as! NewsViewController
-        Alamofire.request(newsUrl).responseJSON { response in
-            switch response.result {
-            case.success(let json):
-                print(json)
-                // newsController.newsData = json
-            case.failure(let error):
-                print(error)
+        let newsViewController = self.childViewControllers[1] as! NewsViewController
+        Alamofire.request(newsUrl).responseSwiftyJSON { response in
+            if response.result.isSuccess, let json = response.result.value {
+                newsViewController.onNewsDataLoaded(data: json)
+            } else {
+                print(response.error!)
             }
         }
     }

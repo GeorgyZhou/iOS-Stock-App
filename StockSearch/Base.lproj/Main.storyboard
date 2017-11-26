@@ -212,6 +212,10 @@
         <scene sceneID="rp6-wi-lPZ">
             <objects>
                 <viewController id="tqj-3w-NXc" customClass="CurrentViewController" customModule="StockSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="afa-8T-SOR"/>
+                        <viewControllerLayoutGuide type="bottom" id="K8s-nt-o78"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="AyH-NE-vF7">
                         <rect key="frame" x="0.0" y="0.0" width="384" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,7 +256,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="352" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bhe-U2-VFe" id="eTs-Gk-qoj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="352" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="352" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2nI-IF-cjw">
@@ -287,6 +291,42 @@
                                                     <outlet property="contentLabel" destination="Kc4-1Q-XWn" id="QrW-H9-91W"/>
                                                     <outlet property="headerLabel" destination="2nI-IF-cjw" id="qpU-t5-h01"/>
                                                 </connections>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="lE5-pw-vGT">
+                                                <rect key="frame" x="0.0" y="72" width="352" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lE5-pw-vGT" id="anR-jG-Wpb">
+                                                    <rect key="frame" x="0.0" y="0.0" width="352" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4is-Wc-Voe">
+                                                            <rect key="frame" x="183" y="11" width="161" height="21"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="contentLabel"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="161" id="eSr-ff-mUX"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="umD-Oh-ewH">
+                                                            <rect key="frame" x="29" y="11" width="146" height="21"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="headerLabel"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="146" id="zYi-HX-w3J"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="4is-Wc-Voe" firstAttribute="leading" secondItem="umD-Oh-ewH" secondAttribute="trailing" constant="8" symbolic="YES" id="8Tf-0H-twN"/>
+                                                        <constraint firstItem="umD-Oh-ewH" firstAttribute="baseline" secondItem="4is-Wc-Voe" secondAttribute="baseline" id="Bv3-4L-zdH"/>
+                                                        <constraint firstItem="umD-Oh-ewH" firstAttribute="centerY" secondItem="anR-jG-Wpb" secondAttribute="centerY" id="Du4-a7-Czq"/>
+                                                        <constraint firstItem="umD-Oh-ewH" firstAttribute="leading" secondItem="anR-jG-Wpb" secondAttribute="leadingMargin" constant="21" id="zFf-AW-JmZ"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
@@ -363,6 +403,10 @@
         <scene sceneID="5nZ-l0-aJD">
             <objects>
                 <viewController id="ofa-T9-3PC" customClass="HistoryViewController" customModule="StockSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Kf3-gS-2BL"/>
+                        <viewControllerLayoutGuide type="bottom" id="ydh-oH-rfT"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ffJ-iu-ThI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -377,6 +421,10 @@
         <scene sceneID="iUf-im-gfx">
             <objects>
                 <viewController id="hdk-p7-dfO" customClass="NewsViewController" customModule="StockSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="da1-Ad-efL"/>
+                        <viewControllerLayoutGuide type="bottom" id="zp2-Vl-lzR"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gVc-Uf-Jjk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="584"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

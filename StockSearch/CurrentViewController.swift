@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Highcharts
+import SwiftyJSON
 
 class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
     
@@ -78,6 +78,20 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         
         self.indicatorPicker.delegate = self
         self.indicatorPicker.dataSource = self
+    }
+    
+    func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
+        tableInfos[0] = data["quote"]["ticker"].string!
+        tableInfos[1] = data["quote"]["price"].string!
+        let change = data["quote"]["change"].string!
+        let changePercent = data["quote"]["changePercent"].string!
+        tableInfos[2] = "\(change) (\(changePercent)%)"
+        tableInfos[3] = data["quote"]["timestamp"].string!
+        tableInfos[4] = data["quote"]["open"].string!
+        tableInfos[5] = data["quote"]["price"].string!
+        tableInfos[6] = data["quote"]["range"].string!
+        tableInfos[7] = data["quote"]["volume"].string!
+        quoteTableView.
     }
     
     /** --------------------------       View Initialize       -------------------------- **/

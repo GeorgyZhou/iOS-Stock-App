@@ -10,6 +10,8 @@ import UIKit
 import SearchTextField
 import Alamofire
 import EasyToast
+import AlamofireSwiftyJSON
+import SwiftyJSON
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -117,28 +119,25 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func loadSuggestions() -> Void {
         let acUrl = "http://dev.markitondemand.com/MODApis/Api/v2/Lookup/json?input=" + ticker;
-        Alamofire.request(acUrl).responseJSON { response in
-            switch response.result {
-            case.success(let json):
+        Alamofire.request(acUrl, method: .get).responseSwiftyJSON { response in
+            if response.result.isSuccess, let json = response.result.value {
                 let data = self.parseJSON(json: json)
                 self.searchTextField.filterStrings(data)
                 self.searchTextField.stopLoadingIndicator()
-            case.failure(let error):
-                print(error)
+            } else {
+                print(response.error!)
                 self.searchTextField.stopLoadingIndicator()
             }
         }
     }
     
-    func parseJSON(json: Any) -> [String] {
-        let sugs = json as! Array<Any>
+    func parseJSON(json: SwiftyJSON.JSON) -> [String] {
         var sugArray : Array<String> = []
-        for obj in sugs {
-            let dic = obj as! Dictionary<String, String>
-            let symbol = dic["Symbol"]! as String
-            let Name = dic["Name"]! as String
-            let Exchange = dic["Exchange"]! as String
-            let sug = symbol + " - " + Name + " (" + Exchange + ")"
+        for dic in json.array! {
+            let symbol = dic["Symbol"].string
+            let Name = dic["Name"].string
+            let Exchange = dic["Exchange"].string
+            let sug = "\(symbol!) - \(Name!) (\(Exchange!))"
             sugArray.append(sug)
         }
         return sugArray

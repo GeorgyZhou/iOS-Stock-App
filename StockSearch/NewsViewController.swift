@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class NewsViewController : UIViewController {
     
+    /** --------------------------       Utility Function      -------------------------- **/
+    func onNewsDataLoaded(data: SwiftyJSON.JSON) -> Void {
+        
+    }
     
     /** --------------------------       View Initialize       -------------------------- **/
     
