@@ -325,6 +325,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3FG-VR-cVb">
+                                        <rect key="frame" x="16" y="525" width="352" height="360"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </webView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="1h2-Ch-oLN" firstAttribute="trailing" secondItem="jYs-6j-EXN" secondAttribute="trailing" id="2Jc-GO-xKb"/>
@@ -365,6 +370,7 @@
                         <outlet property="FBButton" destination="Nxr-iD-SL4" id="hsU-Xg-XZT"/>
                         <outlet property="changeButton" destination="YqQ-ye-P7g" id="cxC-hD-fAR"/>
                         <outlet property="indicatorPicker" destination="q1m-XB-BM4" id="Ois-KO-Qa2"/>
+                        <outlet property="indicatorWebView" destination="3FG-VR-cVb" id="PeI-fF-dQO"/>
                         <outlet property="quoteTableView" destination="VUh-Sa-pbY" id="msS-Ew-RBZ"/>
                         <outlet property="scrollView" destination="AyH-NE-vF7" id="pKV-eD-BiN"/>
                         <outlet property="starButton" destination="Hmq-Wr-Rtg" id="OHV-te-btm"/>
@@ -372,7 +378,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="61L-Xz-eUM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2993.5999999999999" y="-1165.8170914542729"/>
+            <point key="canvasLocation" x="2980.8000000000002" y="-1592.2038980509747"/>
         </scene>
         <!--History View Controller-->
         <scene sceneID="5nZ-l0-aJD">

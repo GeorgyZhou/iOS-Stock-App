@@ -70,12 +70,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-## Highcharts
-
-This is the repository for Highcharts iOS, a Objective-C wrapper for the JavaScript charting library: Highcharts.
-For commercial usage, a valid license is required. To purchase a license for Highcharts iOS, please see our website: https://shop.highsoft.com/
-In case of questions, please contact sales@highsoft.com
-
 ## SearchTextField
 
 Copyright (c) 2016 Alejandro Pasccon <apasccon@gmail.com>

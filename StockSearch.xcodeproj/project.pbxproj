@@ -20,6 +20,7 @@
 		12515F711FC61E5F00967597 /* StockSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F701FC61E5F00967597 /* StockSearchUITests.swift */; };
 		12515F831FC672EE00967597 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F821FC672EE00967597 /* DetailViewController.swift */; };
 		1280407E1FCA629A00CD5A22 /* NewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280407D1FCA629A00CD5A22 /* NewsTableCell.swift */; };
+		128040821FCAA54700CD5A22 /* webview in Resources */ = {isa = PBXBuildFile; fileRef = 128040811FCAA54700CD5A22 /* webview */; };
 		19D0584DC63594CB7B5F3D55 /* Pods_StockSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2372A2010B7B541C63DF731C /* Pods_StockSearchUITests.framework */; };
 		29CF4743399A0FEF5DE7FDA7 /* Pods_StockSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72208C9703565C9A82EB44E /* Pods_StockSearch.framework */; };
 		C603717F8D5365995A7B9674 /* Pods_StockSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439220A2E9091ECFEA82A290 /* Pods_StockSearchTests.framework */; };
@@ -63,6 +64,7 @@
 		12515F721FC61E5F00967597 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12515F821FC672EE00967597 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		1280407D1FCA629A00CD5A22 /* NewsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableCell.swift; sourceTree = "<group>"; };
+		128040811FCAA54700CD5A22 /* webview */ = {isa = PBXFileReference; lastKnownFileType = folder; path = webview; sourceTree = "<group>"; };
 		2372A2010B7B541C63DF731C /* Pods_StockSearchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockSearchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F18C90BF4DA6F9E56C15B90 /* Pods-StockSearchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockSearchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StockSearchTests/Pods-StockSearchTests.release.xcconfig"; sourceTree = "<group>"; };
 		439220A2E9091ECFEA82A290 /* Pods_StockSearchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockSearchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +106,7 @@
 		12515F441FC61E5E00967597 = {
 			isa = PBXGroup;
 			children = (
+				128040811FCAA54700CD5A22 /* webview */,
 				12515F4F1FC61E5F00967597 /* StockSearch */,
 				12515F641FC61E5F00967597 /* StockSearchTests */,
 				12515F6F1FC61E5F00967597 /* StockSearchUITests */,
@@ -299,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				128040821FCAA54700CD5A22 /* webview in Resources */,
 				12515F5B1FC61E5F00967597 /* LaunchScreen.storyboard in Resources */,
 				12515F581FC61E5F00967597 /* Assets.xcassets in Resources */,
 				12515F561FC61E5F00967597 /* Main.storyboard in Resources */,
@@ -428,7 +432,6 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireSwiftyJSON/AlamofireSwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/EasyToast/EasyToast.framework",
-				"${PODS_ROOT}/Highcharts/development/Highcharts.framework",
 				"${BUILT_PRODUCTS_DIR}/SearchTextField/SearchTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftSpinner/SwiftSpinner.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
@@ -438,7 +441,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireSwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyToast.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Highcharts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SearchTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftSpinner.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",

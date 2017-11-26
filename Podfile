@@ -6,7 +6,6 @@ target 'StockSearch' do
   use_frameworks!
 
   # Pods for StockSearch
-  pod 'Highcharts', '~> 6.0.2'
   pod "SearchTextField", '~> 1.1.0'
   pod 'Alamofire', '~> 4.5'
   pod 'EasyToast'

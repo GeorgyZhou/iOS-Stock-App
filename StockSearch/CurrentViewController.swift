@@ -17,6 +17,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var indicatorPicker: UIPickerView!
     @IBOutlet weak var changeButton: UIButton!
     @IBOutlet weak var quoteTableView: UITableView!
+    @IBOutlet weak var indicatorWebView: UIWebView!
     
     
     // var quoteData: Any = nil;
@@ -86,6 +87,13 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         
         self.indicatorPicker.delegate = self
         self.indicatorPicker.dataSource = self
+        
+        guard let url = Bundle.main.url(forResource: "webview/indicators", withExtension: "html") else {
+            print("indicators.html loading failed")
+            return
+        }
+        let request = URLRequest(url: url)
+        self.indicatorWebView.loadRequest(request)
     }
     
     func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
