@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource {
+class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var FBButton: UIButton!
@@ -44,6 +44,12 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
             cell.infoImageView.image = (headingChar == "-" ? #imageLiteral(resourceName: "DownArrowIcon") : #imageLiteral(resourceName: "UpArrowIcon"))
         }
         return cell
+    }
+    
+    /** --------------------------   WebView Implementation    -------------------------- **/
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        
     }
     
     /** --------------------------       Indicator Picker      -------------------------- **/
@@ -82,15 +88,9 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     /** --------------------------       Utility Function      -------------------------- **/
     
     func initView() -> Void {
-        self.quoteTableView.delegate = self
-        self.quoteTableView.dataSource = self
-        self.quoteTableView.alwaysBounceVertical = false
         
-        self.indicatorPicker.delegate = self
-        self.indicatorPicker.dataSource = self
-        
-       
     }
+    
     
     func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
         tableInfos[0] = data["quote"]["ticker"].string!
@@ -117,6 +117,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: 750.0)
         
         guard let url = Bundle.main.url(forResource: "webview/indicators", withExtension: "html") else {
@@ -125,6 +126,16 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         }
         let request = URLRequest(url: url)
         self.indicatorWebView.loadRequest(request)
+        self.indicatorWebView.isOpaque = false
+        self.indicatorWebView.backgroundColor = UIColor.clear
+        self.indicatorWebView.delegate = self
+        
+        self.quoteTableView.delegate = self
+        self.quoteTableView.dataSource = self
+        self.quoteTableView.alwaysBounceVertical = false
+        
+        self.indicatorPicker.delegate = self
+        self.indicatorPicker.dataSource = self
     }
     
     override func didReceiveMemoryWarning() {
