@@ -11,4 +11,5 @@ import UIKit
 class QuoteTableCell : UITableViewCell {
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
+    @IBOutlet weak var infoImageView: UIImageView!
 }

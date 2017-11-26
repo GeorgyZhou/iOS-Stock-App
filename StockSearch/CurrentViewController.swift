@@ -38,6 +38,10 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         let cell = quoteTableView.dequeueReusableCell(withIdentifier: "QuoteTableViewCell", for: indexPath) as! QuoteTableCell
         cell.headerLabel?.text = tableHeaders[indexPath.row]
         cell.contentLabel?.text = tableInfos[indexPath.row]
+        if indexPath.row == 2 && tableInfos[2].characters.count > 0 {
+            let headingChar = Array(tableInfos[2].characters)[0]
+            cell.infoImageView.image = (headingChar == "-" ? #imageLiteral(resourceName: "DownArrowIcon") : #imageLiteral(resourceName: "UpArrowIcon"))
+        }
         return cell
     }
     
@@ -70,6 +74,10 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         return self.indicatorPickerData[row]
     }
     
+    /** --------------------------       Action Bindings       -------------------------- **/
+    
+    
+    
     /** --------------------------       Utility Function      -------------------------- **/
     
     func initView() -> Void {
@@ -82,16 +90,19 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
         tableInfos[0] = data["quote"]["ticker"].string!
-        tableInfos[1] = data["quote"]["price"].string!
-        let change = data["quote"]["change"].string!
-        let changePercent = data["quote"]["changePercent"].string!
+        tableInfos[1] = "\(data["quote"]["price"].double!)"
+        let change = "\(data["quote"]["change"].double!)"
+        let changePercent = "\(data["quote"]["changePercent"].double!)"
         tableInfos[2] = "\(change) (\(changePercent)%)"
         tableInfos[3] = data["quote"]["timestamp"].string!
         tableInfos[4] = data["quote"]["open"].string!
-        tableInfos[5] = data["quote"]["price"].string!
+        tableInfos[5] = data["quote"]["close"].string!
         tableInfos[6] = data["quote"]["range"].string!
-        tableInfos[7] = data["quote"]["volume"].string!
-        quoteTableView.
+        let volume = Int(data["quote"]["volume"].double! * 1000000) as NSNumber
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        tableInfos[7] = numberFormatter.string(from: volume)!
+        quoteTableView.reloadData()
     }
     
     /** --------------------------       View Initialize       -------------------------- **/

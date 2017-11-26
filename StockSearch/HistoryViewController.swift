@@ -10,6 +10,7 @@ import UIKit
 
 class HistoryViewController : UIViewController {
     
+    @IBOutlet weak var historyWebView: UIWebView!
     
     /** --------------------------       View Initialize       -------------------------- **/
     

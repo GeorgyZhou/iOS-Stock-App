@@ -19,6 +19,7 @@
 		12515F661FC61E5F00967597 /* StockSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F651FC61E5F00967597 /* StockSearchTests.swift */; };
 		12515F711FC61E5F00967597 /* StockSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F701FC61E5F00967597 /* StockSearchUITests.swift */; };
 		12515F831FC672EE00967597 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12515F821FC672EE00967597 /* DetailViewController.swift */; };
+		1280407E1FCA629A00CD5A22 /* NewsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1280407D1FCA629A00CD5A22 /* NewsTableCell.swift */; };
 		19D0584DC63594CB7B5F3D55 /* Pods_StockSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2372A2010B7B541C63DF731C /* Pods_StockSearchUITests.framework */; };
 		29CF4743399A0FEF5DE7FDA7 /* Pods_StockSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72208C9703565C9A82EB44E /* Pods_StockSearch.framework */; };
 		C603717F8D5365995A7B9674 /* Pods_StockSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439220A2E9091ECFEA82A290 /* Pods_StockSearchTests.framework */; };
@@ -61,6 +62,7 @@
 		12515F701FC61E5F00967597 /* StockSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSearchUITests.swift; sourceTree = "<group>"; };
 		12515F721FC61E5F00967597 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		12515F821FC672EE00967597 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		1280407D1FCA629A00CD5A22 /* NewsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableCell.swift; sourceTree = "<group>"; };
 		2372A2010B7B541C63DF731C /* Pods_StockSearchUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockSearchUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F18C90BF4DA6F9E56C15B90 /* Pods-StockSearchTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StockSearchTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-StockSearchTests/Pods-StockSearchTests.release.xcconfig"; sourceTree = "<group>"; };
 		439220A2E9091ECFEA82A290 /* Pods_StockSearchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StockSearchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +137,7 @@
 				121C53D21FC91FB600D0C447 /* QuoteTableCell.swift */,
 				121C53D41FC95F6400D0C447 /* NewsViewController.swift */,
 				121C53D61FC95F8700D0C447 /* HistoryViewController.swift */,
+				1280407D1FCA629A00CD5A22 /* NewsTableCell.swift */,
 			);
 			path = StockSearch;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				121C53D11FC9137200D0C447 /* CurrentViewController.swift in Sources */,
 				12515F531FC61E5F00967597 /* ViewController.swift in Sources */,
 				12515F511FC61E5F00967597 /* AppDelegate.swift in Sources */,
+				1280407E1FCA629A00CD5A22 /* NewsTableCell.swift in Sources */,
 				121C53D51FC95F6400D0C447 /* NewsViewController.swift in Sources */,
 				12515F831FC672EE00967597 /* DetailViewController.swift in Sources */,
 				121C53D71FC95F8700D0C447 /* HistoryViewController.swift in Sources */,
