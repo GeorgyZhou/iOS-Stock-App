@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import EasyToast
 
 class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate {
     
@@ -19,6 +20,9 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var quoteTableView: UITableView!
     @IBOutlet weak var indicatorWebView: UIWebView!
     @IBOutlet weak var subContentView: UIView!
+    @IBOutlet weak var webViewHeightCst: NSLayoutConstraint!
+    @IBOutlet weak var waitSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var errorLabelView: UILabel!
     
     
     // var quoteData: Any = nil;
@@ -27,6 +31,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     var tableInfos = ["", "", "", "", "", "", "", ""]
     var ticker = ""
     var indicator = "Price"
+    var checkTimer : Timer?
     
     /** --------------------------  TableView Implementation   -------------------------- **/
     
@@ -52,11 +57,9 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     /** --------------------------   WebView Implementation    -------------------------- **/
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        var newBounds = self.indicatorWebView.bounds
-        print("Before resizing: \(newBounds.size.height)")
-        // newBounds.size.height = self.indicatorWebView.scrollView.contentSize.height
-        self.indicatorWebView.bounds = newBounds
-        print("Finish resizing: \(newBounds.size.height)")
+        self.loadWebViewChart(indicator: self.indicator)
+        self.resizeWebViewHeight()
+        self.resizeScrollViewByWebViewHeight()
     }
     
     /** --------------------------       Indicator Picker      -------------------------- **/
@@ -72,11 +75,9 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int,
                     forComponent component: Int, reusing view: UIView?) -> UIView {
         var pickerLabel = view as? UILabel;
-        
         if pickerLabel == nil {
             pickerLabel = UILabel()
         }
-        
         pickerLabel?.font =  UIFont.systemFont(ofSize: 16.0)
         pickerLabel?.textAlignment = NSTextAlignment.center
         pickerLabel?.text = indicatorPickerData[row]
@@ -88,29 +89,92 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         return self.indicatorPickerData[row]
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.indicator = indicatorPickerData[row]
+    }
+    
     /** --------------------------       Action Bindings       -------------------------- **/
     
+    @IBAction func onIndicatorChange(_ sender: Any) {
+        self.errorLabelView.isHidden = true
+        self.indicatorWebView.isHidden = false
+        self.loadWebViewChart(indicator: self.indicator)
+    }
     
     
     /** --------------------------       Utility Function      -------------------------- **/
     
     func initView() -> Void {
-        
+        self.errorLabelView.isHidden = true
+    }
+    
+    func startTimer() -> Void {
+        self.checkTimer?.invalidate()
+        self.checkTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(CurrentViewController.checkChartStatus), userInfo: nil, repeats: true)
+    }
+    
+    func stopTimer() -> Void {
+        self.checkTimer?.invalidate()
+    }
+    
+    func onError() {
+        self.errorLabelView.isHidden = false
+        self.indicatorWebView.isHidden = true
+    }
+    
+    func resizeWebViewHeight() {
+        self.webViewHeightCst.constant = self.indicatorWebView.scrollView.contentSize.height
+        var newBounds = self.indicatorWebView.bounds
+        newBounds.size.height = self.indicatorWebView.scrollView.contentSize.height
+        self.indicatorWebView.bounds = newBounds
+    }
+    
+    @objc func checkChartStatus() {
+        let checkFunc = "checkChartStatus();"
+        let status = self.indicatorWebView.stringByEvaluatingJavaScript(from: checkFunc)
+        if status == nil || status == "No" {
+        } else {
+            self.waitSpinner.stopAnimating()
+            self.stopTimer()
+            if checkError() {
+                self.onError()
+            } else {
+                self.resizeWebViewHeight()
+                self.resizeScrollViewByWebViewHeight()
+            }
+        }
+    }
+    
+    func checkError() -> Bool {
+        let checkFunc = "checkError();"
+        let status = self.indicatorWebView.stringByEvaluatingJavaScript(from: checkFunc)
+        if status == nil || status == "Yes" {
+            return true
+        } else {
+            return false
+        }
     }
     
     func loadWebView(indicator: String) {
-        guard let path = Bundle.main.path(forResource: "webview/indicators", ofType: "html") else {
+        guard let url = Bundle.main.url(forResource: "webview/indicators", withExtension: "html") else {
             print("indicators.html loading failed")
             return
         }
-        let html = try! String(contentsOfFile: path)
-        self.indicatorWebView.loadHTMLString(html, baseURL: nil)
-        self.loadWebViewChart(indicator: indicator)
+        let request = URLRequest(url: url)
+        self.indicatorWebView.loadRequest(request)
         self.indicator = indicator
     }
     
     func loadWebViewChart(indicator: String) {
-        self.indicatorWebView.stringByEvaluatingJavaScript(from: "loader(\(self.ticker, indicator)")
+        self.waitSpinner.startAnimating()
+        self.startTimer()
+        let callFunc = "loader('\(self.ticker)', '\(indicator)');"
+        self.indicatorWebView.stringByEvaluatingJavaScript(from: callFunc)
+    }
+    
+    func resizeScrollViewByWebViewHeight() {
+        let scrollHeight = self.indicatorWebView.frame.height + self.indicatorWebView.frame.origin.y
+        self.resizeScrollView(height: scrollHeight)
     }
     
     func resizeScrollView(height: CGFloat) {
@@ -118,6 +182,10 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
+        if data["Error Message"].exists() {
+            self.view.showToast("Failed to load data. Please try again later", position: .bottom, popTime: 5, dismissOnTap: false)
+            return;
+        }
         tableInfos[0] = data["quote"]["ticker"].string!
         tableInfos[1] = "\(data["quote"]["price"].double!)"
         let change = "\(data["quote"]["change"].double!)"
@@ -144,11 +212,11 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.resizeScrollView(height: 750.0)
+        self.resizeScrollView(height: 900.0)
         
         self.indicatorWebView.isOpaque = false
         self.indicatorWebView.backgroundColor = UIColor.clear
-        print("when initializing: \(self.indicatorWebView.bounds.size.height)")
+        self.indicatorWebView.scrollView.isScrollEnabled = false
         self.indicatorWebView.delegate = self
         self.loadWebView(indicator: "Price")
         

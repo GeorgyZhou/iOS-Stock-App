@@ -1,0 +1,111 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>HistoryChart</title>
+</head>
+<body>
+<div id="chartContainer"></div>
+</body>
+<script src="highstock.js"></script>
+<script src="exporting.js"></script>
+<script>
+  var isChartFinished = false;
+  var isError = false;
+
+  let sortCompareFn = function(obj1, obj2) {
+    if (obj1[0] < obj2[0]) {
+      return -1;
+    } else if (obj1[0] > obj2[0]) {
+      return 1;
+    }
+    return 0;
+  };
+
+  function checkChartStatus() {
+    return isChartFinished ? "Yes" : "No";
+  }
+
+  function checkEorr() {
+    return isError ? "Yes" : "No";
+  }
+
+  function loader(inputTicker) {
+    console.log("Begin loading: " + inputTicker);
+    document.getElementById("chartContainer").innerHTML = "";
+    isChartFinished = false;
+    isError = false;
+    ticker = inputTicker;
+    loadHistoryChart(ticker);
+  }
+
+  function loadHistoryChart(ticker) {
+    const url = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/historical?symbol=" + ticker;
+    fetch(url).then(function(response) {
+      if (response.status !== 200) {
+        isError = true;
+        isChartFinished = true;
+        return;
+      }
+      response.json().then(data => {
+        drawChart(data, ticker);
+      });
+    });
+  }
+
+  function drawChart(data, ticker) {
+    let options;
+    const titleText = ticker + ' Stock Price and Volume';
+    options = {
+      title: {
+        text: ticker + ' Stock Value'
+      },
+      subtitle: {
+        text: '<a target="_blank" style="color: blue" href="https://www.alphavantage.co">Source: Alpha Vantage</a>'
+      },
+      rangeSelector: {
+        buttons: [{
+          type: 'week',
+          count: 1,
+          text: '1w'
+        }, {
+          type: 'month',
+          count: 1,
+          text: '1m'
+        }, {
+          type: 'month',
+          count: 3,
+          text: '3m'
+        }, {
+          type: 'month',
+          count: 6,
+          text: '6m'
+        }, {
+          type: 'ytd',
+          count: 1,
+          text: 'YTD'
+        }, {
+          type: 'year',
+          count: 1,
+          text: '1y'
+        }, {
+          type: 'all',
+          count: 1,
+          text: 'All'
+        }],
+        selected: 1
+      },
+
+      series: [{
+        name: ticker,
+        type: 'area',
+        data: data['priceSeries'].sort(sortCompareFn),
+        color: '#97C2E8'
+      }]
+    };
+    Highcharts.stockChart('chartContainer', options);
+    isChartFinished = true;
+    isError = false;
+  }
+</script>
+</html>

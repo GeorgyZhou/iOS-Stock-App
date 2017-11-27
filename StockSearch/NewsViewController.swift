@@ -13,6 +13,7 @@ class NewsViewController : UIViewController, UITableViewDelegate, UITableViewDat
     
     
     @IBOutlet weak var newsTableView: UITableView!
+    @IBOutlet weak var errorLabelView: UILabel!
     
     var tableData : Array<Dictionary<String, String>> = []
     
@@ -46,6 +47,10 @@ class NewsViewController : UIViewController, UITableViewDelegate, UITableViewDat
     
     /** --------------------------       Utility Function      -------------------------- **/
     func onNewsDataLoaded(data: SwiftyJSON.JSON) -> Void {
+        if data["Error Message"].exists() {
+            self.onError()
+            return
+        }
         self.tableData.removeAll()
         for obj in data.array! {
             let entry : [String: String] = ["title": obj["title"].string!, "date":
@@ -56,8 +61,15 @@ class NewsViewController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func initView() -> Void {
+        self.errorLabelView.isHidden = true
+        
         self.newsTableView.delegate = self
         self.newsTableView.dataSource = self
+    }
+    
+    func onError() {
+        self.errorLabelView.isHidden = false
+        self.newsTableView.isHidden = true
     }
     
     /** --------------------------       View Initialize       -------------------------- **/

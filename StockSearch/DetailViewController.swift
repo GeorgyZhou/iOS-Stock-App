@@ -26,8 +26,6 @@ class DetailViewController: UIViewController {
         switch self.segmentControl.selectedSegmentIndex
         {
         case 0:
-            let currentController = self.childViewControllers[0] as! CurrentViewController
-            currentController.ticker = self.ticker
             switchCurrentView()
         case 1:
             switchHistoryView()
@@ -97,6 +95,10 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let currentController = self.childViewControllers[0] as! CurrentViewController
+        currentController.ticker = self.ticker
+        let historyController = self.childViewControllers[1] as! HistoryViewController
+        historyController.ticker = self.ticker
         self.title = ticker
         self.switchCurrentView()
         self.loadData()
