@@ -13,7 +13,7 @@ import EasyToast
 import AlamofireSwiftyJSON
 import SwiftyJSON
 
-class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
     @IBOutlet weak var SearchButton: UIButton!
@@ -22,11 +22,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var FavoriteList: UITableView!
     @IBOutlet weak var OrderPicker: UIPickerView!
     @IBOutlet weak var SortPicker: UIPickerView!
+    @IBOutlet weak var waitSpinner: UIActivityIndicatorView!
+    
     
     var searchTextField : SearchTextField = SearchTextField(frame: CGRect(x: 22, y: 111, width: 328, height: 30))
     
     let sortIndicators = ["Default", "Symbol", "Price", "Change", "Change(%)"]
     let orderIndicators = ["Ascending", "Descending"]
+    var favStockList : [[String: Any]] = []
     var ticker : String = ""
     
     
@@ -75,6 +78,29 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
     
+    /** --------------------------  TableView Implementation   -------------------------- **/
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return favStockList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = FavoriteList.dequeueReusableCell(withIdentifier: "FavTableViewCell", for: indexPath) as! FavTableCell
+        let row = indexPath.row
+        cell.tickerLabel.text = favStockList[row]["ticker"]
+        cell.priceLabel.text = "$\(favStockList[row]["price"])"
+        cell.changeLabel.text = "\(favStockList[row]["change"]) (\(favStockList[row]["changePercent"]))"
+        if favStockList[row]["change"].count > 0, favStockList[row]["change"][0] == "-" {
+            cell.changeLabel.textColor = UIColor.green
+        } else {
+            cell.changeLabel.textColor = UIColor.red
+        }
+        return cell
+    }
 
     /** --------------------------       Actions Binding       -------------------------- **/
     
@@ -143,7 +169,21 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return sugArray
     }
     
+    func loadUserDefaults() {
+        let defaults = UserDefaults.standard
+        for entry in defaults.dictionaryRepresentation() {
+            self.favStockList.append([entry.key: entry.value])
+        }
+    }
+    
     func initView() -> Void {
+        // Initialize favorite stock lists
+        
+        
+        // Initialize favorite list table data and delegate
+        self.FavoriteList.delegate = self
+        self.FavoriteList.dataSource = self
+        
         // Initialize PickerView data and delegate
         self.SortPicker.dataSource = self
         self.SortPicker.delegate = self

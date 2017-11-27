@@ -32,6 +32,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     var ticker = ""
     var indicator = "Price"
     var checkTimer : Timer?
+    var defaults: Any?
     
     /** --------------------------  TableView Implementation   -------------------------- **/
     
@@ -101,11 +102,19 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         self.loadWebViewChart(indicator: self.indicator)
     }
     
+    @IBAction func onStarStock(_ sender: Any) {
+        if self.isStar {
+            self.starButton.setImage(#imageLiteral(resourceName: "GrayStarIcon"), for: .normal)
+        } else {
+            self.starButton.setImage(#imageLiteral(resourceName: "YelloStarIcon"), for: .normal)
+        }
+    }
     
     /** --------------------------       Utility Function      -------------------------- **/
     
     func initView() -> Void {
         self.errorLabelView.isHidden = true
+        self.defaults = UserDefaults.dictionaryRepresentation()
     }
     
     func startTimer() -> Void {

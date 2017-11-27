@@ -13,6 +13,7 @@ class HistoryViewController : UIViewController, UIWebViewDelegate {
     @IBOutlet weak var historyWebView: UIWebView!
     @IBOutlet weak var waitSpinner: UIActivityIndicatorView!
     @IBOutlet weak var errorLabelView: UILabel!
+    @IBOutlet weak var webViewHeightCst: NSLayoutConstraint!
     
     var ticker = ""
     var checkTimer : Timer?
@@ -85,6 +86,7 @@ class HistoryViewController : UIViewController, UIWebViewDelegate {
     }
     
     func resizeWebViewHeight() {
+        self.webViewHeightCst.constant = self.historyWebView.scrollView.contentSize.height
         var newBounds = self.historyWebView.bounds
         newBounds.size.height = self.historyWebView.scrollView.contentSize.height
         self.historyWebView.bounds = newBounds
