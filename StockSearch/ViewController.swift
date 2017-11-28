@@ -23,9 +23,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     @IBOutlet weak var OrderPicker: UIPickerView!
     @IBOutlet weak var SortPicker: UIPickerView!
     @IBOutlet weak var waitSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var searchTextField: SearchTextField!
     
-    
-    var searchTextField : SearchTextField = SearchTextField(frame: CGRect(x: 22, y: 111, width: 328, height: 30))
     
     let sortIndicators = ["Default", "Symbol", "Price", "Change", "Change(%)"]
     let orderIndicators = ["Ascending", "Descending"]
@@ -313,10 +312,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         self.OrderPicker.delegate = self
         
         // Initialize auto complete text view
-        self.searchTextField.backgroundColor = UIColor.white
-        self.searchTextField.placeholder = "Enter Stock Ticker Symbol"
-        self.searchTextField.textAlignment = .center
         self.searchTextField.maxNumberOfResults = 5
+        self.searchTextField.startVisible = true
         self.searchTextField.userStoppedTypingHandler = {
             if let criteria = self.searchTextField.text {
                 if criteria.count > 1, self.validate() {

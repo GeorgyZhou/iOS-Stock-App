@@ -91,7 +91,7 @@ class HistoryViewController : UIViewController, UIWebViewDelegate {
     }
 
     func checkError() -> Bool {
-        let status = self.historyWebView.stringByEvaluatingJavaScript(from: "checkError();"
+        let status = self.historyWebView.stringByEvaluatingJavaScript(from: "checkError();")
         if status == nil || status == "Yes" {
             return true
         } else {
