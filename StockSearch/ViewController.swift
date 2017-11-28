@@ -29,8 +29,12 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     let sortIndicators = ["Default", "Symbol", "Price", "Change", "Change(%)"]
     let orderIndicators = ["Ascending", "Descending"]
+    var sortindicator : String = "default"
+    var isAscending: Bool = true
     var favStockList : [[String: Any]] = []
     var ticker : String = ""
+    var refreshTimer : Timer?
+    var refreshCount = 0
     
     
     /** -------------------------- PickerView Initialize -------------------------- **/
@@ -46,8 +50,6 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        // TODO (resort data)
-        
         if pickerView == SortPicker {
             return sortIndicators.count
         } else {
@@ -78,6 +80,52 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
     
+    func resortFavoriteList(by: String, isAscending: Bool) {
+        self.favStockList = self.favStockList.sorted { item1, item2 in
+            if by != "ticker" {
+                let indicator1 = item1[by] as! Double
+                let indicator2 = item2[by] as! Double
+                return isAscending ? indicator1 < indicator2 : indicator1 > indicator2
+            } else {
+                let indicator1 = item1[by] as! String
+                let indicator2 = item2[by] as! String
+                return isAscending ? indicator1 < indicator2 : indicator1 > indicator2
+            }
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView == self.SortPicker {
+            switch self.sortIndicators[row] {
+            case "Default":
+                self.sortindicator = "default"
+                self.loadUserDefaults()
+            case "Price":
+                self.sortindicator = "price"
+                self.resortFavoriteList(by: "price", isAscending: self.isAscending)
+            case "Symbol":
+                self.sortindicator = "ticker"
+                self.resortFavoriteList(by: "ticker", isAscending: self.isAscending)
+            case "Change":
+                self.sortindicator = "change"
+                self.resortFavoriteList(by: "change", isAscending: self.isAscending)
+            case "Cahnge(%)":
+                self.sortindicator = "changePercent"
+                self.resortFavoriteList(by: "changePercent", isAscending: self.isAscending)
+            default:
+                break
+            }
+        } else {
+            self.isAscending = (self.orderIndicators[row] == "Ascending")
+            if self.sortindicator == "default" {
+                self.loadUserDefaults(self.isAscending)
+            } else {
+                self.resortFavoriteList(by: self.sortindicator, isAscending: self.isAscending)
+            }
+        }
+        self.FavoriteList.reloadData()
+    }
+    
     /** --------------------------  TableView Implementation   -------------------------- **/
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -89,17 +137,41 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = FavoriteList.dequeueReusableCell(withIdentifier: "FavTableViewCell", for: indexPath) as! FavTableCell
+        let cell = self.FavoriteList.dequeueReusableCell(withIdentifier: "FavTableViewCell", for: indexPath) as! FavTableCell
         let row = indexPath.row
-        cell.tickerLabel.text = favStockList[row]["ticker"]
-        cell.priceLabel.text = "$\(favStockList[row]["price"])"
-        cell.changeLabel.text = "\(favStockList[row]["change"]) (\(favStockList[row]["changePercent"]))"
-        if favStockList[row]["change"].count > 0, favStockList[row]["change"][0] == "-" {
+        cell.tickerLabel.text = favStockList[row]["ticker"] as? String
+        cell.priceLabel.text = "$\(favStockList[row]["price"]!)"
+        cell.changeLabel.text = "\(favStockList[row]["change"]!) (\(favStockList[row]["changePercent"]!)%)"
+        let change = favStockList[row]["change"] as! Double
+        if change >= 0 {
             cell.changeLabel.textColor = UIColor.green
         } else {
             cell.changeLabel.textColor = UIColor.red
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let ticker = self.favStockList[indexPath.row]["ticker"] as! String
+        let detailViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        detailViewController.ticker = ticker
+        self.navigationController?.pushViewController(detailViewController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            let ticker = self.favStockList[indexPath.row]["ticker"] as! String
+            self.favStockList.remove(at: indexPath.row)
+            let defaults = UserDefaults.standard
+            defaults.removeObject(forKey: "stock-\(ticker)")
+            defaults.synchronize()
+            self.FavoriteList.reloadData()
+            return
+        }
     }
 
     /** --------------------------       Actions Binding       -------------------------- **/
@@ -125,10 +197,16 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     
     @IBAction func onRefreshButtonClick(_ sender: Any) {
         // TODO(reload data and update table list)
+        self.refreshFavList()
     }
     
     @IBAction func onAutoRefreshToggle(_ sender: Any) {
-        // TODO(change auto refresh policy)
+        if self.AutoRefreshButton.isOn {
+            self.refreshTimer?.invalidate()
+            self.refreshTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(ViewController.refreshFavList), userInfo: nil, repeats: true)
+        } else {
+            self.refreshTimer?.invalidate()
+        }
     }
     
     /** --------------------------       Utility Function      -------------------------- **/
@@ -141,6 +219,33 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
         ticker = validTicker!
         return true
+    }
+    
+    @objc func refreshFavList() {
+        let totalCount = self.favStockList.count
+        if totalCount == 0 { return }
+        self.waitSpinner.startAnimating()
+        self.refreshCount = 0
+        for index in 0...(totalCount - 1) {
+            let ticker = self.favStockList[index]["ticker"] as! String
+            self.getQuote(ticker: ticker, index: index, totalCount: totalCount)
+        }
+    }
+    
+    func getQuote(ticker: String, index: Int, totalCount: Int) {
+        let url = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/quote?symbol=\(ticker)"
+        Alamofire.request(url, method: .get).responseSwiftyJSON { response in
+            if response.result.isSuccess, let json = response.result.value {
+                self.favStockList[index] = ["ticker": ticker, "price": json["quote"]["price"].double!, "change": json["quote"]["change"].double!, "changePercent": json["quote"]["changePercent"].double!]
+            } else {
+                print(response.error!)
+            }
+            self.refreshCount += 1
+            if self.refreshCount == totalCount {
+                self.FavoriteList.reloadData()
+                self.waitSpinner.stopAnimating()
+            }
+        }
     }
     
     func loadSuggestions() -> Void {
@@ -157,6 +262,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
     
+    
     func parseJSON(json: SwiftyJSON.JSON) -> [String] {
         var sugArray : Array<String> = []
         for dic in json.array! {
@@ -169,16 +275,32 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         return sugArray
     }
     
-    func loadUserDefaults() {
-        let defaults = UserDefaults.standard
-        for entry in defaults.dictionaryRepresentation() {
-            self.favStockList.append([entry.key: entry.value])
+    func loadUserDefaults(_ isAscending : Bool = true) {
+        let dictionary = UserDefaults.standard.dictionaryRepresentation()
+        var stockOrder : [String] = []
+        self.favStockList = []
+        if dictionary.keys.contains("stockOrder") {
+            stockOrder = dictionary["stockOrder"] as! [String]
+        }
+        if !isAscending {
+            stockOrder = Array(stockOrder.reversed())
+        }
+        for ticker in stockOrder {
+            self.favStockList.append(dictionary["stock-\(ticker)"] as! [String: Any])
         }
     }
     
     func initView() -> Void {
         // Initialize favorite stock lists
+        self.FavoriteList.allowsMultipleSelectionDuringEditing = false
+        self.FavoriteList.delegate = self
+        self.FavoriteList.dataSource = self
         
+        // Initialize indicator color
+        self.waitSpinner.color = UIColor.green
+        
+        // Initialize auto refresh
+        self.AutoRefreshButton.isOn = false
         
         // Initialize favorite list table data and delegate
         self.FavoriteList.delegate = self
@@ -221,6 +343,8 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     override func viewWillAppear(_ animated: Bool) {
         
         // Hide navigation bar
+        self.loadUserDefaults()
+        self.FavoriteList.reloadData()
         self.navigationController?.isNavigationBarHidden = true
     }
 

@@ -65,21 +65,19 @@ class HistoryViewController : UIViewController, UIWebViewDelegate {
         self.waitSpinner.startAnimating()
         self.startTimer()
         let callFunc = "loader('\(self.ticker)')"
-        print(callFunc)
         self.historyWebView.stringByEvaluatingJavaScript(from: callFunc)
     }
     
     @objc func checkChartStatus() {
         let status = self.historyWebView.stringByEvaluatingJavaScript(from: "checkChartStatus()")
         if status == nil || status == "" || status == "No" {
-            print("still loading....")
+            // if want to add something in
         } else {
             self.waitSpinner.stopAnimating()
             self.stopTimer()
             if self.checkError() {
                 self.onError()
             } else {
-                print("Finish Loading")
                 self.resizeWebViewHeight()
             }
         }
@@ -93,7 +91,7 @@ class HistoryViewController : UIViewController, UIWebViewDelegate {
     }
 
     func checkError() -> Bool {
-        let status = self.historyWebView.stringByEvaluatingJavaScript(from: "checkError();")
+        let status = self.historyWebView.stringByEvaluatingJavaScript(from: "checkError();"
         if status == nil || status == "Yes" {
             return true
         } else {

@@ -26,7 +26,7 @@
     return isChartFinished ? "Yes" : "No";
   }
 
-  function checkEorr() {
+  function checkError() {
     return isError ? "Yes" : "No";
   }
 
@@ -48,6 +48,11 @@
         return;
       }
       response.json().then(data => {
+        if (data["Error Message"]) {
+          isError = true;
+          isChartFinished = true;
+          return;
+        }
         drawChart(data, ticker);
       });
     });

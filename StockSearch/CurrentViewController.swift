@@ -14,7 +14,8 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var FBButton: UIButton!
-    @IBOutlet weak var starButton: UIButton!
+    @IBOutlet weak var grayStarButton: UIButton!
+    @IBOutlet weak var yellowStarButton: UIButton!
     @IBOutlet weak var indicatorPicker: UIPickerView!
     @IBOutlet weak var changeButton: UIButton!
     @IBOutlet weak var quoteTableView: UITableView!
@@ -32,7 +33,9 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     var ticker = ""
     var indicator = "Price"
     var checkTimer : Timer?
-    var defaults: Any?
+    var price: Double = 0.0
+    var change: Double = 0.0
+    var changePercent : Double = 0.0
     
     /** --------------------------  TableView Implementation   -------------------------- **/
     
@@ -103,10 +106,26 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     @IBAction func onStarStock(_ sender: Any) {
-        if self.isStar {
-            self.starButton.setImage(#imageLiteral(resourceName: "GrayStarIcon"), for: .normal)
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        if dictionary.keys.contains("stock-\(self.ticker)") {
+            self.yellowStarButton.isHidden = true
+            self.grayStarButton.isHidden = false
+            defaults.removeObject(forKey: "stock-\(self.ticker)")
+            let stockOrder = dictionary["stockOrder"] as! [String]
+            defaults.set(stockOrder.filter{$0 != self.ticker}, forKey: "stockOrder")
+            defaults.synchronize()
         } else {
-            self.starButton.setImage(#imageLiteral(resourceName: "YelloStarIcon"), for: .normal)
+            self.yellowStarButton.isHidden = false
+            self.grayStarButton.isHidden = true
+            var stockOrder : [String] = []
+            if dictionary.keys.contains("stockOrder") {
+                stockOrder = dictionary["stockOrder"] as! [String]
+            }
+            stockOrder.append(self.ticker)
+            defaults.set(stockOrder, forKey: "stockOrder")
+            defaults.set(["ticker": self.ticker, "price": self.price, "change": self.change, "changePercent": self.changePercent], forKey: "stock-\(self.ticker)")
+            defaults.synchronize()
         }
     }
     
@@ -114,7 +133,17 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func initView() -> Void {
         self.errorLabelView.isHidden = true
-        self.defaults = UserDefaults.dictionaryRepresentation()
+    }
+    
+    func checkStar() -> Void {
+        let dictionary = UserDefaults.standard.dictionaryRepresentation()
+        if dictionary.keys.contains("stock-\(self.ticker)") {
+            self.yellowStarButton.isHidden = false
+            self.grayStarButton.isHidden = true
+        } else {
+            self.grayStarButton.isHidden = false
+            self.yellowStarButton.isHidden = true
+        }
     }
     
     func startTimer() -> Void {
@@ -197,8 +226,11 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
         }
         tableInfos[0] = data["quote"]["ticker"].string!
         tableInfos[1] = "\(data["quote"]["price"].double!)"
-        let change = "\(data["quote"]["change"].double!)"
-        let changePercent = "\(data["quote"]["changePercent"].double!)"
+        self.change = data["quote"]["change"].double!
+        self.changePercent = data["quote"]["changePercent"].double!
+        self.price = data["quote"]["price"].double!
+        let change = "\(self.change)"
+        let changePercent = "\(self.changePercent)"
         tableInfos[2] = "\(change) (\(changePercent)%)"
         tableInfos[3] = data["quote"]["timestamp"].string!
         tableInfos[4] = data["quote"]["open"].string!
@@ -216,6 +248,10 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.checkStar()
     }
     
     override func viewDidLayoutSubviews() {

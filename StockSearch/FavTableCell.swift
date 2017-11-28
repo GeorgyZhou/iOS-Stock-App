@@ -9,8 +9,8 @@
 import UIKit
 
 class FavTableCell : UITableViewCell {
-    @IBOutlet weak var tickerLabel: UILabel
-    @IBOutlet weak var priceLabel: UILabel
-    @IBOutlet weak var changeLabel: UILabel
+    @IBOutlet weak var tickerLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var changeLabel: UILabel!
 }
 
