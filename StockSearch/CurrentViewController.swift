@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 import EasyToast
+import FacebookShare
 
 class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate {
     
@@ -36,6 +37,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     var price: Double = 0.0
     var change: Double = 0.0
     var changePercent : Double = 0.0
+    var exportUrl : String?
     
     /** --------------------------  TableView Implementation   -------------------------- **/
     
@@ -98,6 +100,27 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     /** --------------------------       Action Bindings       -------------------------- **/
+    
+    @IBAction func onFBShare(_ sender: Any) {
+        let content = LinkShareContent(url: URL(string: self.exportUrl!)!)
+        do {
+            let shareDialog = ShareDialog(content: content)
+            shareDialog.completion = { result in
+                switch result {
+                case .success:
+                    self.view.showToast("Shared successfully!", position: .bottom, popTime: 5, dismissOnTap: false)
+                case .failed:
+                    self.view.showToast("Failed to generate post!", position: .bottom, popTime: 5, dismissOnTap: false)
+                case .cancelled:
+                    self.view.showToast("Share cancelled!", position: .bottom, popTime: 5, dismissOnTap: false)
+                }
+            }
+            try shareDialog.show()
+        } catch (let error) {
+            print(error)
+            self.view.showToast("Share failed", position: .bottom, popTime: 5, dismissOnTap: false)
+        }
+    }
     
     @IBAction func onIndicatorChange(_ sender: Any) {
         self.errorLabelView.isHidden = true
@@ -179,6 +202,9 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
             } else {
                 self.resizeWebViewHeight()
                 self.resizeScrollViewByWebViewHeight()
+                let getUrlFunc = "getExportUrl();"
+                self.exportUrl = self.indicatorWebView.stringByEvaluatingJavaScript(from: getUrlFunc)
+                self.FBButton.isEnabled = (exportUrl != "Error" && exportUrl != "")
             }
         }
     }
@@ -206,6 +232,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     func loadWebViewChart(indicator: String) {
         self.waitSpinner.startAnimating()
         self.startTimer()
+        self.FBButton.isEnabled = false
         let callFunc = "loader('\(self.ticker)', '\(indicator)');"
         self.indicatorWebView.stringByEvaluatingJavaScript(from: callFunc)
     }

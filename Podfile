@@ -12,6 +12,9 @@ target 'StockSearch' do
   pod 'AlamofireSwiftyJSON'
   pod 'SwiftSpinner'
   pod 'SwiftyJSON'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
   
   target 'StockSearchTests' do
     inherit! :search_paths

@@ -231,11 +231,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         }
     }
     
+    func updateUserDefaults(ticker: String, value: Any) {
+        let defaults = UserDefaults.standard
+        defaults.set(value, forKey: "stock-\(ticker)")
+    }
+    
     func getQuote(ticker: String, index: Int, totalCount: Int) {
         let url = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/quote?symbol=\(ticker)"
         Alamofire.request(url, method: .get).responseSwiftyJSON { response in
             if response.result.isSuccess, let json = response.result.value {
                 self.favStockList[index] = ["ticker": ticker, "price": json["quote"]["price"].double!, "change": json["quote"]["change"].double!, "changePercent": json["quote"]["changePercent"].double!]
+                self.updateUserDefaults(ticker: ticker, value: self.favStockList[index])
             } else {
                 print(response.error!)
             }
