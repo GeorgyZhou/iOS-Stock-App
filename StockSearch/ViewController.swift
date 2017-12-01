@@ -166,6 +166,9 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             let ticker = self.favStockList[indexPath.row]["ticker"] as! String
             self.favStockList.remove(at: indexPath.row)
             let defaults = UserDefaults.standard
+            let dictionary = defaults.dictionaryRepresentation()
+            let stockOrder = dictionary["stockOrder"] as! [String]
+            defaults.set(stockOrder.filter{$0 != self.ticker}, forKey: "stockOrder")
             defaults.removeObject(forKey: "stock-\(ticker)")
             defaults.synchronize()
             self.FavoriteList.reloadData()
@@ -240,6 +243,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         let url = "http://ec2-18-221-164-179.us-east-2.compute.amazonaws.com/api/quote?symbol=\(ticker)"
         Alamofire.request(url, method: .get).responseSwiftyJSON { response in
             if response.result.isSuccess, let json = response.result.value {
+                print(json)
                 self.favStockList[index] = ["ticker": ticker, "price": json["quote"]["price"].double!, "change": json["quote"]["change"].double!, "changePercent": json["quote"]["changePercent"].double!]
                 self.updateUserDefaults(ticker: ticker, value: self.favStockList[index])
             } else {
@@ -347,6 +351,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         
         // Hide navigation bar
         self.loadUserDefaults()
+        self.refreshFavList()
         self.FavoriteList.reloadData()
         self.navigationController?.isNavigationBarHidden = true
     }

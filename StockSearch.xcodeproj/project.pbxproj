@@ -50,6 +50,7 @@
 		121C53D21FC91FB600D0C447 /* QuoteTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteTableCell.swift; sourceTree = "<group>"; };
 		121C53D41FC95F6400D0C447 /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		121C53D61FC95F8700D0C447 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		1239B67B1FD0D58A00FFB65A /* StockSearch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = StockSearch.entitlements; sourceTree = "<group>"; };
 		12515F4D1FC61E5F00967597 /* StockSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12515F501FC61E5F00967597 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		12515F521FC61E5F00967597 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		12515F4F1FC61E5F00967597 /* StockSearch */ = {
 			isa = PBXGroup;
 			children = (
+				1239B67B1FD0D58A00FFB65A /* StockSearch.entitlements */,
 				12515F501FC61E5F00967597 /* AppDelegate.swift */,
 				12515F521FC61E5F00967597 /* ViewController.swift */,
 				12515F541FC61E5F00967597 /* Main.storyboard */,
@@ -266,8 +268,14 @@
 				TargetAttributes = {
 					12515F4C1FC61E5E00967597 = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = Z5XPU7BJ7A;
 						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					12515F601FC61E5F00967597 = {
 						CreatedOnToolsVersion = 8.2;
@@ -681,6 +689,8 @@
 			baseConfigurationReference = 4FC08288C6B6676E935C5D4F /* Pods-StockSearch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StockSearch/StockSearch.entitlements;
+				DEVELOPMENT_TEAM = Z5XPU7BJ7A;
 				INFOPLIST_FILE = StockSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelzhou.StockSearch;
@@ -695,6 +705,8 @@
 			baseConfigurationReference = 8C4F65A329441EF718654607 /* Pods-StockSearch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = StockSearch/StockSearch.entitlements;
+				DEVELOPMENT_TEAM = Z5XPU7BJ7A;
 				INFOPLIST_FILE = StockSearch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelzhou.StockSearch;

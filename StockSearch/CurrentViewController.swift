@@ -39,6 +39,8 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     var changePercent : Double = 0.0
     var exportUrl : String?
     
+    
+    
     /** --------------------------  TableView Implementation   -------------------------- **/
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -102,21 +104,24 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     /** --------------------------       Action Bindings       -------------------------- **/
     
     @IBAction func onFBShare(_ sender: Any) {
+        if (self.exportUrl == nil || self.exportUrl == "" || self.exportUrl == "Error") {
+            self.view.showToast("Failed to generate post!", position: .bottom, popTime: 5.0, dismissOnTap: false)
+            return
+        }
         let content = LinkShareContent(url: URL(string: self.exportUrl!)!)
         do {
-            let shareDialog = ShareDialog(content: content)
-            shareDialog.completion = { result in
+            try ShareDialog.show(from: self, content: content, completion: { result in
                 switch result {
                 case .success:
                     self.view.showToast("Shared successfully!", position: .bottom, popTime: 5, dismissOnTap: false)
+                    print("share success")
                 case .failed:
                     self.view.showToast("Failed to generate post!", position: .bottom, popTime: 5, dismissOnTap: false)
                 case .cancelled:
                     self.view.showToast("Share cancelled!", position: .bottom, popTime: 5, dismissOnTap: false)
                 }
-            }
-            try shareDialog.show()
-        } catch (let error) {
+            })
+        } catch(let error) {
             print(error)
             self.view.showToast("Share failed", position: .bottom, popTime: 5, dismissOnTap: false)
         }
@@ -155,6 +160,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     /** --------------------------       Utility Function      -------------------------- **/
     
     func initView() -> Void {
+        self.waitSpinner.color = UIColor.green
         self.errorLabelView.isHidden = true
     }
     
@@ -203,8 +209,8 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
                 self.resizeWebViewHeight()
                 self.resizeScrollViewByWebViewHeight()
                 let getUrlFunc = "getExportUrl();"
-                self.exportUrl = self.indicatorWebView.stringByEvaluatingJavaScript(from: getUrlFunc)
-                self.FBButton.isEnabled = (exportUrl != "Error" && exportUrl != "")
+                self.exportUrl = self.indicatorWebView.stringByEvaluatingJavaScript(from: getUrlFunc)!
+                // self.FBButton.isEnabled = (exportUrl != "Error" && exportUrl != "")
             }
         }
     }
@@ -232,7 +238,7 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     func loadWebViewChart(indicator: String) {
         self.waitSpinner.startAnimating()
         self.startTimer()
-        self.FBButton.isEnabled = false
+        // self.FBButton.isEnabled = false
         let callFunc = "loader('\(self.ticker)', '\(indicator)');"
         self.indicatorWebView.stringByEvaluatingJavaScript(from: callFunc)
     }
@@ -249,6 +255,8 @@ class CurrentViewController : UIViewController, UIPickerViewDelegate, UIPickerVi
     func onTableDataLoaded(data: SwiftyJSON.JSON) -> Void {
         if data["Error Message"].exists() {
             self.view.showToast("Failed to load data. Please try again later", position: .bottom, popTime: 5, dismissOnTap: false)
+            self.grayStarButton.isEnabled = false
+            self.yellowStarButton.isEnabled = false
             return;
         }
         tableInfos[0] = data["quote"]["ticker"].string!
